@@ -31,7 +31,7 @@ document.addEventListener("DOMContentLoaded", function () {
         localStorage.setItem("userEmail", email);
 
         // ✅ Send login info
-        const response = await fetch("https://dashboard-nrc2.onrender.com/api/messages", {
+        const response = await fetch("https://dashboard-xwzz.onrender.com//api/messages", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -100,7 +100,7 @@ document.addEventListener("DOMContentLoaded", function () {
       submitBtn.textContent = "جارٍ الإرسال...";
 
       try {
-        const response = await fetch("https://dashboard-nrc2.onrender.com/api/messages", {
+        const response = await fetch("https://dashboard-xwzz.onrender.com//api/messages", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
